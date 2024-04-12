@@ -1,0 +1,7 @@
+(library
+ (name nvpair)
+ (public_name nvpair)
+ (c_library_flags -lnvpair)
+ (foreign_stubs
+  (language c)
+  (names nvpair)))
