@@ -11,6 +11,8 @@ Most nvlist functions are implemented here. Operations on nvpairs are left for f
 Usage
 -----
 
+Example manipulating the ZFS zpool cache file on a system with a pool named "storage":
+
 ```ocaml
 open Nvpair;;
 let pools =
