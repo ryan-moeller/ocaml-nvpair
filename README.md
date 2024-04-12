@@ -13,11 +13,12 @@ Usage
 
 ```ocaml
 open Nvpair;;
-let f = In_channel.open_bin "/etc/zfs/zpool.cache";;
-let len = Int64.to_int @@ In_channel.length f;;
-let buf = Bytes.create len;;
-let () = Option.get @@ In_channel.really_input f buf 0 len;;
-let pools = Nvlist.unpack buf;;
+let pools =
+  let f = In_channel.open_bin "/etc/zfs/zpool.cache" in
+  let len = Int64.to_int @@ In_channel.length f in
+  let buf = Bytes.create len in
+  Option.get @@ In_channel.really_input f buf 0 len;
+  Nvlist.unpack buf;;
 let storage = Option.get @@ Nvlist.lookup_nvlist pools "storage";;
 let vdev_tree = Option.get @@ Nvlist.lookup_nvlist storage "vdev_tree";;
 let vdevs = Option.get @@ Nvlist.lookup_nvlist_array vdev_tree "children";;
