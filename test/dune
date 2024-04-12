@@ -1,0 +1,4 @@
+(test
+ (name test_nvpair)
+ (deps zpool.cache)
+ (libraries nvpair))
