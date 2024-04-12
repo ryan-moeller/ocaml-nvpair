@@ -755,7 +755,6 @@ CAMLprim value
 caml_nvlist_lookup_string(value nvl_custom, value name)
 {
 	CAMLparam2 (nvl_custom, name);
-	CAMLlocal1 (v);
 	const char *s;
 	int err;
 
@@ -765,8 +764,7 @@ caml_nvlist_lookup_string(value nvl_custom, value name)
 	} else if (err) {
 		caml_failwith("nvlist_lookup_string");
 	}
-	v = caml_copy_string(s);
-	CAMLreturn (caml_alloc_some(v));
+	CAMLreturn (caml_alloc_some(caml_copy_string(s)));
 }
 
 CAMLprim value
