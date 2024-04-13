@@ -165,3 +165,98 @@ let () =
   assert (Some Int64.min_int = Nvlist.lookup_int64 e "int64");
   assert (Some 0xffff_ffff_ffff_ffffL = Nvlist.lookup_uint64 e "uint64");
   assert (Some "this is a string" = Nvlist.lookup_string e "string")
+
+let () =
+  let pair = Option.get @@ Nvlist.lookup_nvpair unpacked_xdr "nvlist" in
+  let a = Nvpair.value_nvlist pair in
+  let _ = Option.get @@ Nvlist.lookup_nvpair a "boolean" in
+  let pair = Option.get @@ Nvlist.lookup_nvpair a "boolean_value" in
+  assert (false = Nvpair.value_boolean_value pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair a "byte" in
+  assert (0xff = Nvpair.value_byte pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair a "int8" in
+  assert (-12 = Nvpair.value_int8 pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair a "uint8" in
+  assert (255 = Nvpair.value_uint8 pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair a "int16" in
+  assert (-1234 = Nvpair.value_int16 pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair a "uint16" in
+  assert (0xffff = Nvpair.value_uint16 pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair a "int32" in
+  assert (Int32.min_int = Nvpair.value_int32 pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair a "uint32" in
+  assert (0xffff_ffffl = Nvpair.value_uint32 pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair a "int64" in
+  assert (Int64.min_int = Nvpair.value_int64 pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair a "uint64" in
+  assert (0xffff_ffff_ffff_ffffL = Nvpair.value_uint64 pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair a "string" in
+  assert ("this is a string" = Nvpair.value_string pair);
+  let b = unpacked_xdr in
+  let pair = Option.get @@ Nvlist.lookup_nvpair b "boolean_array" in
+  assert ([| true; false; true; false |] = Nvpair.value_boolean_array pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair b "byte_array" in
+  assert (Bytes.of_string "these are bytes" = Nvpair.value_byte_array pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair b "int8_array" in
+  assert ([| 0x7f; 0x00; -1; 123 |] = Nvpair.value_int8_array pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair b "uint8_array" in
+  assert ([| 0xff; 0x00 |] = Nvpair.value_uint8_array pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair b "int16_array" in
+  assert ([| 1234; -1234; 0x1234; -0x1234 |] = Nvpair.value_int16_array pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair b "uint16_array" in
+  assert ([| 0xffff; 0x0000 |] = Nvpair.value_uint16_array pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair b "int32_array" in
+  assert ([| Int32.max_int; Int32.min_int |] = Nvpair.value_int32_array pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair b "uint32_array" in
+  assert ([| 0xffff_ffffl; 0x0000_0000l |] = Nvpair.value_uint32_array pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair b "int64_array" in
+  assert ([| Int64.max_int; Int64.min_int |] = Nvpair.value_int64_array pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair b "uint64_array" in
+  assert (
+    [| 0xffff_ffff_ffff_ffffL; 0x0000_0000_0000_0000L |]
+    = Nvpair.value_uint64_array pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair b "string_array" in
+  assert ([| "these"; "are"; "strings" |] = Nvpair.value_string_array pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair b "nvlist_array" in
+  let c, d, e =
+    match Nvpair.value_nvlist_array pair with
+    | [| c; d; e |] -> (c, d, e)
+    | _ -> failwith "match failed"
+  in
+  let pair = Option.get @@ Nvlist.lookup_nvpair c "hrtime" in
+  assert (12345L = Nvpair.value_hrtime pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair d "double" in
+  assert (123.45 = Nvpair.value_double pair);
+  let _ = Option.get @@ Nvlist.lookup_nvpair e "boolean" in
+  let pair = Option.get @@ Nvlist.lookup_nvpair e "boolean_value" in
+  assert (false = Nvpair.value_boolean_value pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair e "byte" in
+  assert (0xff = Nvpair.value_byte pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair e "int8" in
+  assert (-12 = Nvpair.value_int8 pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair e "uint8" in
+  assert (255 = Nvpair.value_uint8 pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair e "int16" in
+  assert (-1234 = Nvpair.value_int16 pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair e "uint16" in
+  assert (0xffff = Nvpair.value_uint16 pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair e "int32" in
+  assert (Int32.min_int = Nvpair.value_int32 pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair e "uint32" in
+  assert (0xffff_ffffl = Nvpair.value_uint32 pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair e "int64" in
+  assert (Int64.min_int = Nvpair.value_int64 pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair e "uint64" in
+  assert (0xffff_ffff_ffff_ffffL = Nvpair.value_uint64 pair);
+  let pair = Option.get @@ Nvlist.lookup_nvpair e "string" in
+  assert ("this is a string" = Nvpair.value_string pair)
+
+let () =
+  let pair = Option.get @@ Nvlist.lookup_nvpair dlist "double" in
+  assert ("double" = Nvpair.name pair);
+  assert (Nvpair.Double = Nvpair.data_type pair)
+
+let () =
+  let prev = Nvlist.prev_nvpair dlist None in
+  assert (Option.is_some prev);
+  assert (None = Nvlist.prev_nvpair dlist prev)
