@@ -37,7 +37,7 @@ let () =
   print_endline "storage pool details:";
   Printf.printf "\tversion: %Lu\n" version;
   Printf.printf "\ttxg: %Lu\n" txg;
-  Printf.printf "\tpool_guid: %Lx\n" pool_guid;
+  Printf.printf "\tpool_guid: %Lu\n" pool_guid;
   Printf.printf "\thostid: %Lu\n" hostid;
   Printf.printf "\thostname: %s\n" hostname
 
