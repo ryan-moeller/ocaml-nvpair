@@ -333,19 +333,11 @@ caml_nvlist_add_byte_array(value nvl_custom, value name, value vs)
 	uchar_t *bytes;
 	uint_t nbytes;
 
-	nbytes = Wosize_val(vs);
-	bytes = malloc(nbytes * sizeof (uchar_t));
-	if (bytes == NULL) {
-		caml_failwith("malloc");
-	}
-	for (uint_t i = 0; i < nbytes; i++) {
-		bytes[i] = Int_val(Field(vs, i));
-	}
+	nbytes = caml_string_length(vs);
+	bytes = Bytes_val(vs);
 	if (nvlist_add_byte_array(Nvlist_val(nvl_custom), String_val(name), bytes, nbytes)) {
-		free(bytes);
 		caml_failwith("nvlist_add_byte_array");
 	}
-	free(bytes);
 	CAMLreturn (Val_unit);
 }
 
@@ -719,7 +711,7 @@ caml_nvlist_lookup_int16(value nvl_custom, value name)
 	} else if (err) {
 		caml_failwith("nvlist_lookup_int16");
 	}
-	CAMLreturn (caml_alloc_some(Int_val(v)));
+	CAMLreturn (caml_alloc_some(Val_int(v)));
 }
 
 CAMLprim value
@@ -871,7 +863,7 @@ caml_nvlist_lookup_byte_array(value nvl_custom, value name)
 	} else if (err) {
 		caml_failwith("nvlist_lookup_byte_array");
 	}
-	vs = caml_alloc_initialized_string(nbytes, (const char *)bytes);
+	vs = caml_alloc_initialized_string(nbytes, (char *)bytes);
 	CAMLreturn (caml_alloc_some(vs));
 }
 
@@ -885,7 +877,7 @@ caml_nvlist_lookup_int8_array(value nvl_custom, value name)
 	int err;
 
 	err = nvlist_lookup_int8_array(Nvlist_val(nvl_custom), String_val(name), &ints, &nints);
-	if (err == EINVAL) {
+	if (err == ENOENT) {
 		CAMLreturn (Val_none);
 	} else if (err) {
 		caml_failwith("nvlist_lookup_int8_array");
@@ -1066,7 +1058,7 @@ caml_nvlist_lookup_string_array(value nvl_custom, value name)
 	} else if (err) {
 		caml_failwith("nvlist_lookup_string_array");
 	}
-	caml_alloc(nstrs, 0);
+	vs = caml_alloc(nstrs, 0);
 	for (uint_t i = 0; i < nstrs; i++) {
 		Store_field(vs, i, caml_copy_string(strs[i]));
 	}
@@ -1139,7 +1131,7 @@ caml_nvlist_lookup_nvpair(value nvl_custom, value name)
 	int err;
 
 	err = nvlist_lookup_nvpair(Nvlist_val(nvl_custom), String_val(name), &nvp);
-	if (err == ENOENT) {
+	if (err == EINVAL) { /* XXX: nvlist_lookup_nvpair(3) doesn't return ENOENT */
 		CAMLreturn (Val_none);
 	} else if (err) {
 		caml_failwith("nvlist_lookup_nvpair");
