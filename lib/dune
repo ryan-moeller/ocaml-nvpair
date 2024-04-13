@@ -2,6 +2,7 @@
  (name nvpair)
  (public_name nvpair)
  (c_library_flags -lnvpair)
+ (install_c_headers caml_nvpair)
  (foreign_stubs
   (language c)
   (names nvpair)))

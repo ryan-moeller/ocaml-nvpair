@@ -14,6 +14,7 @@ typedef uint64_t hrtime_t;
 #include <caml/memory.h>
 #include <caml/fail.h>
 #include <caml/custom.h>
+#include "caml_nvpair.h"
 
 static const struct custom_operations nvpair_ops = {
 	"org.openzfs.nvpair",
@@ -26,11 +27,8 @@ static const struct custom_operations nvpair_ops = {
 	custom_fixed_length_default
 };
 
-/* Accessing the nvpair_t * part of an OCaml custom block */
-#define Nvpair_val(v) (*((nvpair_t **) Data_custom_val(v)))
-
 /* Allocating an OCaml custom block to hold the given nvpair_t * */
-static value
+value
 nvpair_alloc_custom(nvpair_t *nvp)
 {
 	value v = caml_alloc_custom(&nvpair_ops, sizeof (nvpair_t *), 0, 1);
@@ -51,11 +49,8 @@ static const struct custom_operations nvlist_ops = {
 	custom_fixed_length_default
 };
 
-/* Accessing the nvlist_t * part of an OCaml custom block */
-#define Nvlist_val(v) (*((nvlist_t **) Data_custom_val(v)))
-
 /* Allocating an OCaml custom block to hold the given nvlist_t * */
-static value
+value
 nvlist_alloc_custom(nvlist_t *nvl)
 {
 	value v = caml_alloc_custom(&nvlist_ops, sizeof (nvlist_t *), 0, 1);
