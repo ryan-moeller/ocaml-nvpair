@@ -809,7 +809,7 @@ CAMLprim value
 caml_nvlist_lookup_nvlist(value nvl_custom, value name)
 {
 	CAMLparam2 (nvl_custom, name);
-	nvlist_t *nvl;
+	nvlist_t *nvl, *dup;
 	int err;
 
 	err = nvlist_lookup_nvlist(Nvlist_val(nvl_custom), String_val(name), &nvl);
@@ -818,7 +818,10 @@ caml_nvlist_lookup_nvlist(value nvl_custom, value name)
 	} else if (err) {
 		caml_failwith("nvlist_lookup_nvlist");
 	}
-	CAMLreturn (caml_alloc_some(nvlist_alloc_custom(nvl)));
+	if (nvlist_dup(nvl, &dup, 0)) {
+		caml_failwith("nvlist_dup");
+	}
+	CAMLreturn (caml_alloc_some(nvlist_alloc_custom(dup)));
 }
 
 CAMLprim value
