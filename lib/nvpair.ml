@@ -87,7 +87,6 @@ module Nvlist = struct
   type encoding = Native | XDR
 
   external alloc : unit -> t = "caml_nvlist_alloc"
-  external free : t -> unit = "caml_nvlist_free"
   external pack : t -> encoding -> bytes = "caml_nvlist_pack"
   external unpack : bytes -> t = "caml_nvlist_unpack"
   external dup : t -> t = "caml_nvlist_dup"
