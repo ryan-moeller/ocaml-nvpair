@@ -260,3 +260,14 @@ let () =
   let prev = Nvlist.prev_nvpair dlist None in
   assert (Option.is_some prev);
   assert (None = Nvlist.prev_nvpair dlist prev)
+
+let () =
+  Nvlist.free alist;
+  Nvlist.free blist;
+  Nvlist.free clist;
+  Nvlist.free dlist;
+  Nvlist.free elist;
+  Nvlist.free flist;
+  Nvlist.free glist;
+  Nvlist.free unpacked_native;
+  Nvlist.free unpacked_xdr

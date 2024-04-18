@@ -36,11 +36,9 @@ nvpair_alloc_custom(nvpair_t *nvp)
 	return v;
 }
 
-static void custom_finalize_nvlist(value v);
-
 static const struct custom_operations nvlist_ops = {
 	"org.openzfs.nvlist",
-	custom_finalize_nvlist,
+	custom_finalize_default,
 	custom_compare_default,
 	custom_hash_default,
 	custom_serialize_default,
@@ -74,10 +72,14 @@ caml_nvlist_alloc(value unit)
 	CAMLreturn (nvlist_alloc_custom(nvl));
 }
 
-static void
-custom_finalize_nvlist(value nvl_custom)
+CAMLprim value
+caml_nvlist_free(value nvl_custom)
 {
+	CAMLparam1 (nvl_custom);
+
 	nvlist_free(Nvlist_val(nvl_custom));
+	Nvlist_val(nvl_custom) = NULL;
+	CAMLreturn (Val_unit);
 }
 
 CAMLprim value
