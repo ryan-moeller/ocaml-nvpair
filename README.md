@@ -1,12 +1,12 @@
-Nvpair
-------
+OCaml Bindings for OpenZFS libnvpair(3)
+=======================================
 
-OCaml bindings for OpenZFS libnvpair.
+[![14.2-RELEASE Build Status](https://api.cirrus-ci.com/github/ryan-moeller/ocaml-nvpair.svg?branch=main&task=releases/amd64/14.2-RELEASE)](https://cirrus-ci.com/github/ryan-moeller/ocaml-nvpair)
+[![15.0-CURRENT Build Status](https://api.cirrus-ci.com/github/ryan-moeller/ocaml-nvpair.svg?branch=main&task=releases/amd64/15.0-CURRENT)](https://cirrus-ci.com/github/ryan-moeller/ocaml-nvpair)
 
 linbvpair provides functions for manipulating name-value pair lists.
 
 Most nvlist and nvpair functions are implemented.
-
 
 Usage
 -----
