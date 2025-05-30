@@ -1162,7 +1162,6 @@ caml_nvlist_next_nvpair(value nvl_custom, value nvp_custom_opt)
 {
 	CAMLparam2 (nvl_custom, nvp_custom_opt);
 	nvpair_t *nvp, *next;
-	int err;
 
 	nvp = Is_none(nvp_custom_opt) ? NULL : Nvpair_val(Some_val(nvp_custom_opt));
 	next = nvlist_next_nvpair(Nvlist_val(nvl_custom), nvp);
@@ -1177,7 +1176,6 @@ caml_nvlist_prev_nvpair(value nvl_custom, value nvp_custom_opt)
 {
 	CAMLparam2 (nvl_custom, nvp_custom_opt);
 	nvpair_t *nvp, *prev;
-	int err;
 
 	nvp = Is_none(nvp_custom_opt) ? NULL : Nvpair_val(Some_val(nvp_custom_opt));
 	prev = nvlist_prev_nvpair(Nvlist_val(nvl_custom), nvp);
