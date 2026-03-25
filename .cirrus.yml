@@ -4,15 +4,9 @@ freebsd_instance:
 
 task:
   matrix:
-    - name: snapshots/amd64/14.3-STABLE
+    - name: releases/amd64/14.4-RELEASE
       freebsd_instance:
-        image_family: freebsd-14-3-snap
-    - name: snapshots/amd64/15.0-STABLE
-      freebsd_instance:
-        image_family: freebsd-15-0-amd64-ufs-snap
-    - name: releases/amd64/14.3-RELEASE
-      freebsd_instance:
-        image_family: freebsd-14-3
+        image_family: freebsd-14-4-amd64-ufs
     - name: releases/amd64/15.0-RELEASE
       freebsd_instance:
         image_family: freebsd-15-0-amd64-ufs
