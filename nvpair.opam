@@ -4,10 +4,9 @@ synopsis: "Bindings for OpenZFS libnvpair(3) name-value pair library"
 description: "Functions for managing name-value pairs"
 maintainer: ["Ryan Moeller"]
 authors: ["Ryan Moeller"]
-license: "LICENSE"
+license: "BSD-2-Clause"
 tags: ["topics" "OpenZFS" "ZFS" "nvpair" "nvlist"]
 homepage: "https://github.com/ryan-moeller/ocaml-nvpair"
-doc: "https://url/to/documentation"
 bug-reports: "https://github.com/ryan-moeller/ocaml-nvpair/issues"
 depends: [
   "ocaml"
