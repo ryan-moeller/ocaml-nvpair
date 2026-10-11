@@ -1,6 +1,8 @@
 OCaml Bindings for OpenZFS libnvpair(3)
 =======================================
 
+[![FreeBSD 15.1](https://github.com/ryan-moeller/ocaml-nvpair/workflows/FreeBSD%2015.1/badge.svg)](https://github.com/ryan-moeller/ocaml-nvpair/actions/workflows/test.yml)
+
 libnvpair provides functions for manipulating name-value pair lists.
 
 Most nvlist and nvpair functions are implemented.
